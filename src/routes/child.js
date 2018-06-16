@@ -22,6 +22,7 @@ const router = Router();
 router.get('/', CommonRoute.list(Child));
 router.get('/:id', CommonRoute.get(Child));
 router.put('/:id', CommonRoute.put(Child));
+router.post('/', CommonRoute.post(Child));
 
 router.get('/search', async (req, res) => {
   try {
@@ -128,22 +129,6 @@ router.get('/search', async (req, res) => {
         count,
       });
     };
-  } catch (err) {
-    if (err instanceof Sequelize.ValidationError) {
-      respondBadReq(res)(err);
-    } else {
-      respondErrors(res)(err);
-    }
-  }
-});
-
-router.post('/', async (req, res) => {
-  try {
-    const data = req.body;
-    const newProject = await Child.create({
-      ...data,
-    });
-    respondResult(res)(newProject);
   } catch (err) {
     if (err instanceof Sequelize.ValidationError) {
       respondBadReq(res)(err);

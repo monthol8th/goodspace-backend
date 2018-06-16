@@ -22,6 +22,7 @@ const router = Router();
 router.get('/', CommonRoute.list(Worker));
 router.get('/:id', CommonRoute.get(Worker));
 router.put('/:id', CommonRoute.put(Worker));
+router.post('/', CommonRoute.post(Worker));
 
 router.get('/search', async (req, res) => {
   try {
@@ -88,22 +89,6 @@ router.get('/search', async (req, res) => {
         count,
       });
     };
-  } catch (err) {
-    if (err instanceof Sequelize.ValidationError) {
-      respondBadReq(res)(err);
-    } else {
-      respondErrors(res)(err);
-    }
-  }
-});
-
-router.post('/', async (req, res) => {
-  try {
-    const data = req.body;
-    const newProject = await Worker.create({
-      ...data,
-    });
-    respondResult(res)(newProject);
   } catch (err) {
     if (err instanceof Sequelize.ValidationError) {
       respondBadReq(res)(err);
