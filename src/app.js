@@ -8,16 +8,6 @@ const db = require('./db');
 
 db.sequelize.sync();
 
-
-// sequelize
-// .authenticate()
-// .then(() => {
-//   console.log('Connection has been established successfully.');
-// })
-// .catch((err) => {
-//   console.error('Unable to connect to the database:', err);
-// });
-
 const app = express();
 
 app.use(bodyParser.json());

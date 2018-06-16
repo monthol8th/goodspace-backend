@@ -1,6 +1,7 @@
 import {
-  Router
+  Router,
 } from 'express';
+
 import {
   respondResult,
   respondErrors,
