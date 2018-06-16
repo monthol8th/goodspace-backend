@@ -28,9 +28,38 @@ router.get('/', async (_, res) => {
   }
 });
 
-// router.get('/search', async(req, res) => {
-//   const { name, location}
-// });
+router.get('/search', async (req, res) => {
+  try {
+    const {
+      Op,
+    } = Sequelize;
+    const {
+      name,
+      location,
+    } = req.query;
+
+    const where = name ? {
+      name: {
+        [Op.like]: `%${name}%`,
+      },
+    } : {
+      location: {
+        [Op.like]: `%${location}%`,
+      },
+    };
+
+    const data = await Camp.findAll({
+      where,
+    });
+    respondResult(res)(data);
+  } catch (err) {
+    if (err instanceof Sequelize.ValidationError) {
+      respondBadReq(res)(err);
+    } else {
+      respondErrors(res)(err);
+    }
+  }
+});
 
 router.get('/:id', async (req, res) => {
   try {
