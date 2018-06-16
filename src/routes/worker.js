@@ -18,10 +18,25 @@ const {
 const router = Router();
 
 
-router.get('/', async (_, res) => {
+router.get('/', async (req, res) => {
   try {
-    const row = await Worker.findAll();
-    respondResult(res)(row);
+    const {
+      p,
+    } = req.query;
+    const {
+      rows: data,
+      count,
+    } = await Worker.findAndCountAll({
+      limit: 6,
+      offset: 6 * (p - 1 || 0),
+      order: [
+        ['createdAt', 'DESC'],
+      ],
+    });
+    respondResult(res)({
+      data,
+      count,
+    });
   } catch (err) {
     if (err instanceof Sequelize.ValidationError) {
       respondBadReq(res)(err);

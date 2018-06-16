@@ -27,7 +27,7 @@ router.get('/', async (req, res) => {
       limit: 6,
       offset: 6 * (p - 1 || 0),
       order: [
-        ['createdAt', 'DESC']
+        ['createdAt', 'DESC'],
       ],
     });
     respondResult(res)({
