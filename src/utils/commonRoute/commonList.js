@@ -28,4 +28,4 @@ export default model => async (req, res) => {
       respondErrors(res)(err);
     }
   }
-}
+};
