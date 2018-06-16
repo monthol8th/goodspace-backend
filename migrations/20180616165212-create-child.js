@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Workers', {
+    return queryInterface.createTable('Children', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -11,25 +11,25 @@ module.exports = {
       name: {
         type: Sequelize.STRING
       },
-      tel: {
-        type: Sequelize.STRING
+      birthdate: {
+        type: Sequelize.DATE
       },
       nationality: {
         type: Sequelize.STRING
       },
-      follower: {
-        type: Sequelize.ARRAY(Sequelize.JSON)
-      },
-      type: {
+      sex: {
         type: Sequelize.STRING
       },
-      camp_id: {
+      school: {
+        type: Sequelize.JSON
+      },
+      parent_id: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'Camps', // name of Target model
+          model: 'Workers', // name of Target model
           key: 'id', // key in Target model that we're referencing
         },
-        name: 'project_id',
+        name: 'parent_id',
         onUpdate: 'CASCADE',
         onDelete: 'SET NULL',
       },
@@ -44,6 +44,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Workers');
+    return queryInterface.dropTable('Children');
   }
 };

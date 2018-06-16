@@ -10,6 +10,7 @@ module.exports = (sequelize, DataTypes) => {
   Worker.associate = function(models) {
     // associations can be defined here
     Worker.belongsTo(models.Camp,{foreignKey: 'camp_id'});
+    Worker.hasMany(models.Child,{foreignKey: 'parent_id'});
   };
   return Worker;
 };
