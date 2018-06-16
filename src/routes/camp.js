@@ -16,7 +16,7 @@ const router = Router();
 
 router.get('/', async (_, res) => {
   try {
-    const row = await Project.findAll();
+    const row = await Camp.findAll();
     respondResult(res)(row);
   } catch (err) {
     if (err instanceof Sequelize.ValidationError) {
