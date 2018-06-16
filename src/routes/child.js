@@ -20,6 +20,7 @@ const {
 const router = Router();
 
 router.get('/', CommonRoute.list(Child));
+router.get('/:id', CommonRoute.get(Child));
 
 router.get('/search', async (req, res) => {
   try {
@@ -132,18 +133,6 @@ router.get('/search', async (req, res) => {
     } else {
       respondErrors(res)(err);
     }
-  }
-});
-
-router.get('/:id', async (req, res) => {
-  try {
-    const data = await Child.findById(req.params.id);
-    if (!data) {
-      respondNotFound(res)();
-    }
-    respondResult(res)(data);
-  } catch (err) {
-    respondErrors(res)(err);
   }
 });
 

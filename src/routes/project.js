@@ -18,18 +18,7 @@ const {
 const router = Router();
 
 router.get('/', CommonRoute.list(Project));
-
-router.get('/:id', async (req, res) => {
-  try {
-    const data = await Project.findById(req.params.id);
-    if (!data) {
-      respondNotFound(res)();
-    }
-    respondResult(res)(data);
-  } catch (err) {
-    respondErrors(res)(err);
-  }
-});
+router.get('/:id', CommonRoute.get(Project));
 
 router.put('/:id', async (req, res) => {
   try {

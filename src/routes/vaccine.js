@@ -18,18 +18,7 @@ const {
 const router = Router();
 
 router.get('/', CommonRoute.list(Vaccine));
-
-router.get('/:id', async (req, res) => {
-  try {
-    const data = await Vaccine.findById(req.params.id);
-    if (!data) {
-      respondNotFound(res)();
-    }
-    respondResult(res)(data);
-  } catch (err) {
-    respondErrors(res)(err);
-  }
-});
+router.get('/:id', CommonRoute.get(Vaccine));
 
 router.put('/:id', async (req, res) => {
   try {
