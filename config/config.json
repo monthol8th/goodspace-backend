@@ -1,4 +1,7 @@
 {
+  "define": {
+    "underscored": true
+  },
   "development": {
     "username": "postgres",
     "password": null,

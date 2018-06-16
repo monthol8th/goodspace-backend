@@ -18,13 +18,22 @@ module.exports = {
         type: Sequelize.BOOLEAN
       },
       project_id:{
-        type: Sequelize.UUID,
+        type: Sequelize.INTEGER,
         references: {
           model: 'Projects', // name of Target model
           key: 'id', // key in Target model that we're referencing
         },
+        name: 'project_id',
         onUpdate: 'CASCADE',
         onDelete: 'SET NULL',
+      },
+      createdAt: {
+        allowNull: false,
+        type: Sequelize.DATE
+      },
+      updatedAt: {
+        allowNull: false,
+        type: Sequelize.DATE
       }
     });
   },

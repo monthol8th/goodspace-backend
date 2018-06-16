@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
     finish_date: DataTypes.DATE,
     manager_contact: DataTypes.JSON,
   }, {
-    timestamps: false,
+    foreignkeyConstraint: true,
   });
   Project.associate = function (models) {
     // associations can be defined here
