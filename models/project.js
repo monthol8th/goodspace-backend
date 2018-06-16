@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
   });
   Project.associate = function (models) {
     // associations can be defined here
-    Project.hasMany(models.Camp);
+    Project.hasMany(models.Camp,{foreignKey: 'project_id'});
   };
   return Project;
 };
