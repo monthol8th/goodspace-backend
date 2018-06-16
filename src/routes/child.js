@@ -72,7 +72,7 @@ router.get('/search', async (req, res) => {
       });
       const newData = data.map(row => ({
         ...row.toJSON(),
-        camp_name: row.Parent.name,
+        parent_name: row.Parent.name,
       }));
       respondResult(res)({
         data: newData,
