@@ -75,6 +75,7 @@ router.get('/search', async (req, res) => {
         ['createdAt', 'DESC']
       ],
     });
+
     respondResult(res)({
       data,
       count,
