@@ -4,8 +4,8 @@ module.exports = (sequelize, DataTypes) => {
     nameTH: DataTypes.STRING,
     nameEng: DataTypes.STRING,
     province: DataTypes.STRING,
-    startDate: DataTypes.STRING,
-    finishDate: DataTypes.STRING,
+    startDate: DataTypes.DATE,
+    finishDate: DataTypes.DATE,
     managerContact: DataTypes.JSON,
   }, {});
   Project.associate = function(models) {
