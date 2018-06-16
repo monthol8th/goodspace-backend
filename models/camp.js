@@ -10,6 +10,8 @@ module.exports = (sequelize, DataTypes) => {
   Camp.associate = function (models) {
     // associations can be defined here
     Camp.belongsTo(models.Project,{foreignKey: 'project_id'});
+    Camp.hasMany(models.Worker,{foreignKey: 'camp_id'});
+
   };
   return Camp;
 };
