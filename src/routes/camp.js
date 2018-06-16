@@ -36,6 +36,7 @@ router.get('/search', async (req, res) => {
     const {
       name,
       location,
+      p
     } = req.query;
 
     const where = name ? {
@@ -50,6 +51,8 @@ router.get('/search', async (req, res) => {
 
     const data = await Camp.findAll({
       where,
+      limit: 6,
+      offset: 6 * (p - 1 || 0),
     });
     respondResult(res)(data);
   } catch (err) {
