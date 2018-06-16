@@ -11,15 +11,32 @@ import {
 
 const Sequelize = require('sequelize');
 const {
-  Project
+  Project,
 } = require('../db');
 const router = Router();
 
+router.get('/', async (_, res) => {
+  try {
+    const data = await Project.findAll();
+    respondResult(res)(data);
+  } catch (err) {
+    if (err instanceof Sequelize.ValidationError) {
+      respondBadReq(res)(err);
+    } else {
+      respondErrors(res)(err);
+    }
+  }
+});
+
 router.get('/:id', async (req, res) => {
   try {
-    const response = await Project.findById(req.params.id);
-    respondResult(res)(response);
+    const data = await Project.findById(req.params.id);
+    if (!data) {
+      respondNotFound(res)();
+    }
+    respondResult(res)(data);
   } catch (err) {
+    console.log(err)
     respondErrors(res)(err);
   }
 });
@@ -29,12 +46,12 @@ router.post('/', async (req, res) => {
     const data = req.body;
     const newProject = await Project.create({
       id: data.id,
-      nameTH: data.name_th,
-      nameEng: data.name_eng,
+      name_th: data.name_th,
+      name_eng: data.name_eng,
       province: data.province,
-      startDate: data.start_date,
-      finishDate: data.finish_date,
-      managerContext: data.manager_context,
+      start_date: data.start_date,
+      finish_date: data.finish_date,
+      manager_context: data.manager_context,
     });
     respondResult(res)(newProject);
   } catch (err) {

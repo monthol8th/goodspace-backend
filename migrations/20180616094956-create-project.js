@@ -8,34 +8,23 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      ID: {
+      name_th: {
         type: Sequelize.STRING
       },
-      nameTH: {
-        type: Sequelize.STRING
-      },
-      nameEng: {
+      name_eng: {
         type: Sequelize.STRING
       },
       province: {
         type: Sequelize.STRING
       },
-      startDate: {
+      start_date: {
         type: Sequelize.DATE
       },
-      finishDate: {
+      finish_date: {
         type: Sequelize.DATE
       },
-      managerContact: {
+      manager_contact: {
         type: Sequelize.JSON
-      },
-      createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      },
-      updatedAt: {
-        allowNull: false,
-        type: Sequelize.DATE
       }
     });
   },
