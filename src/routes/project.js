@@ -4,7 +4,6 @@ import {
 import {
   respondResult,
   respondErrors,
-  respondSuccess,
   respondNotFound,
   respondBadReq,
 } from '../utils';
@@ -44,13 +43,7 @@ router.post('/', async (req, res) => {
   try {
     const data = req.body;
     const newProject = await Project.create({
-      id: data.id,
-      name_th: data.name_th,
-      name_eng: data.name_eng,
-      province: data.province,
-      start_date: data.start_date,
-      finish_date: data.finish_date,
-      manager_contact: data.manager_contact,
+      ...data,
     });
     respondResult(res)(newProject);
   } catch (err) {
