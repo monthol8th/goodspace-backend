@@ -1,7 +1,7 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   var Project = sequelize.define('Project', {
-    ID: DataTypes.STRING,
+    ID: { type: DataTypes.STRING, primaryKey: true },
     nameTH: DataTypes.STRING,
     nameEng: DataTypes.STRING,
     province: DataTypes.STRING,
