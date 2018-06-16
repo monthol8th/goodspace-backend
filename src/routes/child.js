@@ -7,7 +7,6 @@ import CommonRoute from '../utils/commonRoute';
 import {
   respondResult,
   respondErrors,
-  respondNotFound,
   respondBadReq,
 } from '../utils/response';
 

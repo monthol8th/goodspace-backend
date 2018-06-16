@@ -7,7 +7,6 @@ import CommonRoute from '../utils/commonRoute';
 import {
   respondResult,
   respondErrors,
-  respondNotFound,
   respondBadReq,
 } from '../utils/response';
 
@@ -30,7 +29,7 @@ router.get('/search', async (req, res) => {
     const {
       name,
       location,
-      p
+      p,
     } = req.query;
 
     const where = name ? {

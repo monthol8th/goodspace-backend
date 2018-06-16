@@ -1,17 +1,9 @@
 import {
-  Router
+  Router,
 } from 'express';
 
 import CommonRoute from '../utils/commonRoute';
 
-import {
-  respondResult,
-  respondErrors,
-  respondNotFound,
-  respondBadReq,
-} from '../utils/response';
-
-const Sequelize = require('sequelize');
 const {
   Project,
 } = require('../db');

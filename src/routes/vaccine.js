@@ -4,14 +4,6 @@ import {
 
 import CommonRoute from '../utils/commonRoute';
 
-import {
-  respondResult,
-  respondErrors,
-  respondNotFound,
-  respondBadReq,
-} from '../utils/response';
-
-const Sequelize = require('sequelize');
 const {
   Vaccine,
 } = require('../db');
