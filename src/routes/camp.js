@@ -28,6 +28,10 @@ router.get('/', async (_, res) => {
   }
 });
 
+// router.get('/search', async(req, res) => {
+//   const { name, location}
+// });
+
 router.get('/:id', async (req, res) => {
   try {
     const data = await Camp.findById(req.params.id);

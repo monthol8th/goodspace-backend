@@ -1,6 +1,7 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   var Camp = sequelize.define('Camp', {
+    name: DataTypes.STRING,
     location: DataTypes.STRING,
     province: DataTypes.STRING,
     has_goodspace: DataTypes.BOOLEAN,
