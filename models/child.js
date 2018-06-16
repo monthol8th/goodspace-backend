@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
   });
   Child.associate = function(models) {
     // associations can be defined here
-    Child.belongsTo(models.Worker,{foreignKey: 'parent_id'});
+    Child.belongsTo(models.Worker,{as: 'Parent',foreignKey: 'parent_id'});
     Child.hasMany(models.Vaccine,{foreignKey: 'child_id'});
   };
   return Child;
