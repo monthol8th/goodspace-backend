@@ -2,12 +2,14 @@ import {
   Router,
 } from 'express';
 
+import CommonRoute from '../utils/commonRoute';
+
 import {
   respondResult,
   respondErrors,
   respondNotFound,
   respondBadReq,
-} from '../utils';
+} from '../utils/response';
 
 const Sequelize = require('sequelize');
 const {
@@ -17,33 +19,7 @@ const {
 } = require('../db');
 const router = Router();
 
-router.get('/', async (req, res) => {
-  try {
-    const {
-      p,
-    } = req.query;
-    const {
-      rows: data,
-      count,
-    } = await Child.findAndCountAll({
-      limit: 6,
-      offset: 6 * (p - 1 || 0),
-      order: [
-        ['createdAt', 'DESC'],
-      ],
-    });
-    respondResult(res)({
-      data,
-      count,
-    });
-  } catch (err) {
-    if (err instanceof Sequelize.ValidationError) {
-      respondBadReq(res)(err);
-    } else {
-      respondErrors(res)(err);
-    }
-  }
-});
+router.get('/', CommonRoute.list(Child));
 
 router.get('/search', async (req, res) => {
   try {
