@@ -2,7 +2,7 @@ import { respondResult, respondBadReq, respondErrors } from '../response';
 
 const Sequelize = require('sequelize');
 
-export default model =>  async (req, res) => {
+export default model => async (req, res) => {
   try {
     const data = req.body;
     const row = await model.findById(req.params.id);
