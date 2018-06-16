@@ -21,6 +21,7 @@ const router = Router();
 
 router.get('/', CommonRoute.list(Worker));
 router.get('/:id', CommonRoute.get(Worker));
+router.put('/:id', CommonRoute.put(Worker));
 
 router.get('/search', async (req, res) => {
   try {
@@ -93,18 +94,6 @@ router.get('/search', async (req, res) => {
     } else {
       respondErrors(res)(err);
     }
-  }
-});
-
-router.put('/:id', async (req, res) => {
-  try {
-    const data = req.body;
-    const row = await Worker.findById(req.params.id);
-    row.set(data);
-    const updatedRow = await row.save();
-    respondResult(res)(updatedRow);
-  } catch (err) {
-    respondErrors(res)(err);
   }
 });
 

@@ -21,6 +21,7 @@ const router = Router();
 
 router.get('/', CommonRoute.list(Child));
 router.get('/:id', CommonRoute.get(Child));
+router.put('/:id', CommonRoute.put(Child));
 
 router.get('/search', async (req, res) => {
   try {
@@ -133,18 +134,6 @@ router.get('/search', async (req, res) => {
     } else {
       respondErrors(res)(err);
     }
-  }
-});
-
-router.put('/:id', async (req, res) => {
-  try {
-    const data = req.body;
-    const row = await Child.findById(req.params.id);
-    row.set(data);
-    const updatedRow = await row.save();
-    respondResult(res)(updatedRow);
-  } catch (err) {
-    respondErrors(res)(err);
   }
 });
 

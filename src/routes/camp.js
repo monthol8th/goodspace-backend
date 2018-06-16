@@ -18,8 +18,8 @@ const {
 const router = Router();
 
 router.get('/', CommonRoute.list(Camp));
-
 router.get('/:id', CommonRoute.get(Camp));
+router.put('/:id', CommonRoute.put(Camp));
 
 router.get('/search', async (req, res) => {
   try {
