@@ -36,7 +36,6 @@ router.get('/:id', async (req, res) => {
     }
     respondResult(res)(data);
   } catch (err) {
-    console.log(err)
     respondErrors(res)(err);
   }
 });
@@ -51,7 +50,7 @@ router.post('/', async (req, res) => {
       province: data.province,
       start_date: data.start_date,
       finish_date: data.finish_date,
-      manager_context: data.manager_context,
+      manager_contact: data.manager_contact,
     });
     respondResult(res)(newProject);
   } catch (err) {
