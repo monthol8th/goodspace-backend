@@ -49,13 +49,21 @@ router.get('/search', async (req, res) => {
       },
     };
 
-    const data = await Camp.findAll({
+    const {
+      rows: data,
+      count,
+    } = await Camp.findAndCountAll({
       where,
       limit: 6,
       offset: 6 * (p - 1 || 0),
-      order: [['createdAt', 'DESC']],
+      order: [
+        ['createdAt', 'DESC']
+      ],
     });
-    respondResult(res)(data);
+    respondResult(res)({
+      data,
+      count,
+    });
   } catch (err) {
     if (err instanceof Sequelize.ValidationError) {
       respondBadReq(res)(err);
