@@ -1,18 +1,22 @@
-const Sequelize = require('sequelize');
+import routes from './routes';
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
-const sequelize = new Sequelize('postgres://postgres@db:5432/ysttr');
+const db = require('./db');
 
-sequelize
-  .authenticate()
-  .then(() => {
-    console.log('Connection has been established successfully.');
-  })
-  .catch((err) => {
-    console.error('Unable to connect to the database:', err);
-  });
+db.sequelize.sync();
+
+
+// sequelize
+// .authenticate()
+// .then(() => {
+//   console.log('Connection has been established successfully.');
+// })
+// .catch((err) => {
+//   console.error('Unable to connect to the database:', err);
+// });
 
 const app = express();
 
@@ -21,4 +25,7 @@ app.use(bodyParser.urlencoded({
   extended: true,
 }));
 app.use(cors());
+
+app.use('/', routes);
+
 export default app;
