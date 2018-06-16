@@ -7,7 +7,7 @@ services:
             - 54321:5432
     node:
         build: .
-        command: /bin/sh -c "sleep 7;node index.js"
+        command: /bin/sh -c "sleep 7;node_modules/.bin/nodemon index.js"
         volumes:
             - .:/code
         ports:
