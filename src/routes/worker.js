@@ -50,11 +50,11 @@ router.get('/:id', async (req, res) => {
       responseNotFound(res)();
     }
     const children = await data.getChildren();
-    const newData = {
+    const validatedData = {
       ...data.toJSON(),
       Children: children
     };
-    responseResult(res)(newData);
+    responseResult(res)(validatedData);
   } catch (err) {
     responseErrors(res)(err);
   }

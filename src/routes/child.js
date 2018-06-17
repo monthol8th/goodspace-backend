@@ -31,12 +31,12 @@ router.get('/', async (req, res) => {
       offset: 6 * (p - 1 || 0),
       order: [['createdAt', 'DESC']]
     });
-    const newData = data.map(row => ({
+    const validatedData = data.map(row => ({
       ...row.toJSON(),
       Camp: row.Parent && row.Parent.Camp
     }));
     responseResult(res)({
-      data: newData,
+      data: validatedData,
       count
     });
   } catch (err) {
@@ -67,12 +67,12 @@ router.get('/:id', async (req, res) => {
       responseNotFound(res)();
     }
 
-    const newData = {
+    const validatedData = {
       ...data.toJSON(),
       Camp: data.Parent && data.Parent.Camp
     };
 
-    responseResult(res)(newData);
+    responseResult(res)(validatedData);
   } catch (err) {
     responseErrors(res)(err);
   }
@@ -138,12 +138,12 @@ router.get('/:id', async (req, res) => {
 //       ['createdAt', 'DESC'],
 //     ],
 //   });
-//   const newData = data.map(row => ({
+//   const validatedData = data.map(row => ({
 //     ...row.toJSON(),
 //     parent_name: row.Parent.name,
 //   }));
 //   responseResult(res)({
-//     data: newData,
+//     data: validatedData,
 //     count,
 //   });
 // } else if (campName) {
@@ -172,13 +172,13 @@ router.get('/:id', async (req, res) => {
 //       ['createdAt', 'DESC'],
 //     ],
 //   });
-//   const newData = data.map(row => ({
+//   const validatedData = data.map(row => ({
 //     ...row.toJSON(),
 //     camp_name: row.Parent.Camp.name,
 //   }));
 
 //   responseResult(res)({
-//     data: newData,
+//     data: validatedData,
 //     count,
 //   });
 // } else {
