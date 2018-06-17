@@ -1,12 +1,8 @@
-import {
-  Router,
-} from 'express';
+import { Router } from 'express';
 
 import CommonRoute from '../utils/commonRoute';
 
-const {
-  Project,
-} = require('../db');
+const { Project } = require('../db');
 const router = Router();
 
 router.get('/', CommonRoute.list(Project));

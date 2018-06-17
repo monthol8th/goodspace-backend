@@ -6,7 +6,7 @@ export default model => async (req, res) => {
   try {
     const data = req.body;
     const newProject = await model.create({
-      ...data,
+      ...data
     });
     respondResult(res)(newProject);
   } catch (err) {

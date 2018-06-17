@@ -1,12 +1,8 @@
-import {
-  Router,
-} from 'express';
+import { Router } from 'express';
 
 import CommonRoute from '../utils/commonRoute';
 
-const {
-  Vaccine,
-} = require('../db');
+const { Vaccine } = require('../db');
 const router = Router();
 
 router.get('/', CommonRoute.list(Vaccine));

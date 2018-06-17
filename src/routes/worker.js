@@ -1,20 +1,11 @@
-import {
-  Router,
-} from 'express';
+import { Router } from 'express';
 
 import CommonRoute from '../utils/commonRoute';
 
-import {
-  respondResult,
-  respondErrors,
-  respondBadReq,
-} from '../utils/response';
+import { respondResult, respondErrors, respondBadReq } from '../utils/response';
 
 const Sequelize = require('sequelize');
-const {
-  Worker,
-  Camp,
-} = require('../db');
+const { Worker, Camp } = require('../db');
 
 const router = Router();
 
@@ -25,69 +16,54 @@ router.post('/', CommonRoute.post(Worker));
 
 router.get('/search', async (req, res) => {
   try {
-    const {
-      Op,
-    } = Sequelize;
-    const {
-      name,
-      id,
-      camp_name: campName,
-      p,
-    } = req.query;
+    const { Op } = Sequelize;
+    const { name, id, camp_name: campName, p } = req.query;
     if (id) {
       const data = await Worker.findById(req.params.id);
 
       respondResult(res)({
         data: [data],
-        count: 1,
+        count: 1
       });
     } else if (campName) {
-      const {
-        rows: data,
-        count,
-      } = await Worker.findAndCountAll({
-        include: [{
-          model: Camp,
-          required: true,
-          attributes: ['name'],
-          where: {
-            name: {
-              [Op.like]: `%${campName}%`,
-            },
-          },
-        }],
+      const { rows: data, count } = await Worker.findAndCountAll({
+        include: [
+          {
+            model: Camp,
+            required: true,
+            attributes: ['name'],
+            where: {
+              name: {
+                [Op.like]: `%${campName}%`
+              }
+            }
+          }
+        ],
         limit: 6,
         offset: 6 * (p - 1 || 0),
-        order: [
-          ['createdAt', 'DESC'],
-        ],
+        order: [['createdAt', 'DESC']]
       });
       respondResult(res)({
         data,
-        count,
+        count
       });
     } else {
-      const {
-        rows: data,
-        count,
-      } = await Worker.findAndCountAll({
+      const { rows: data, count } = await Worker.findAndCountAll({
         where: {
           name: {
-            [Op.like]: `%${name}%`,
-          },
+            [Op.like]: `%${name}%`
+          }
         },
         limit: 6,
         offset: 6 * (p - 1 || 0),
-        order: [
-          ['createdAt', 'DESC'],
-        ],
+        order: [['createdAt', 'DESC']]
       });
 
       respondResult(res)({
         data,
-        count,
+        count
       });
-    };
+    }
   } catch (err) {
     if (err instanceof Sequelize.ValidationError) {
       respondBadReq(res)(err);
@@ -100,8 +76,11 @@ router.get('/search', async (req, res) => {
 router.get('/stat/nationality', async (req, res) => {
   try {
     const result = await Worker.findAll({
-      attributes: ['nationality', [Sequelize.fn('COUNT', 'nationality'), 'count']],
-      group: ['nationality'],
+      attributes: [
+        'nationality',
+        [Sequelize.fn('COUNT', 'nationality'), 'count']
+      ],
+      group: ['nationality']
     });
     respondResult(res)(result);
   } catch (err) {
