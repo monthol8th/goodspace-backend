@@ -40,7 +40,6 @@ router.get('/children', async (req, res) => {
   }
 });
 
-
 router.get('/camps', async (req, res) => {
   try {
     const { Op } = Sequelize;
@@ -136,6 +135,5 @@ router.get('/workers', async (req, res) => {
     }
   }
 });
-
 
 export default router;
