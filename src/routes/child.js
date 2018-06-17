@@ -55,8 +55,7 @@ router.get('/search', async (req, res) => {
       data,
       count,
     });
-  };
-  // if (id) {
+   // if (id) {
   //   const data = await Child.findById(id);
 
   //   respondResult(res)({
