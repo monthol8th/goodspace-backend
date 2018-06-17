@@ -18,70 +18,77 @@ const {
 } = require('../db');
 const router = Router();
 
-// router.get('/', async (req, res) => {
-//   try {
-//     const {
-//       p
-//     } = req.query;
-//     const {
-//       rows: data,
-//       count
-//     } = await Child.findAndCountAll({
-//       include: [{
-//         model: Worker,
-//         as: 'Parent',
-//       }],
-//       limit: 6,
-//       offset: 6 * (p - 1 || 0),
-//       order: [
-//         ['createdAt', 'DESC']
-//       ]
-//     });
-//     responseResult(res)({
-//       data,
-//       count
-//     });
-//   } catch (err) {
-//     if (err instanceof Sequelize.ValidationError) {
-//       responseBadReq(res)(err);
-//     } else {
-//       responseErrors(res)(err);
-//     }
-//   }
-// });
-
-router.get('/search', async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     const {
-      Op,
-    } = Sequelize;
-    const {
-      name,
-      id,
-      camp_name: campName,
-      parent_name: parentName,
-      p,
+      p
     } = req.query;
     const {
       rows: data,
-      count,
+      count
     } = await Child.findAndCountAll({
-      where: {
-        name: {
-          [Op.like]: `%${name}%`,
-        },
-      },
+      include: [{
+        model: Worker,
+        as: 'Parent',
+        include: [{
+          model: Camp,
+         }]
+      }],
       limit: 6,
       offset: 6 * (p - 1 || 0),
       order: [
-        ['createdAt', 'DESC'],
-      ],
+        ['createdAt', 'DESC']
+      ]
     });
-
+    const newData = data.map(row => ({
+          ...row.toJSON(),
+          Camp: row.Parent && row.Parent.Camp,
+        })); 
     responseResult(res)({
-      data,
-      count,
+      data: newData,
+      count
     });
+  } catch (err) {
+    if (err instanceof Sequelize.ValidationError) {
+      responseBadReq(res)(err);
+    } else {
+      responseErrors(res)(err);
+    }
+  }
+});
+
+// router.get('/search', async (req, res) => {
+//   try {
+//     const {
+//       Op,
+//     } = Sequelize;
+//     const {
+//       name,
+//       id,
+//       camp_name: campName,
+//       parent_name: parentName,
+//       p,
+//     } = req.query;
+//     const {
+//       rows: data,
+//       count,
+//     } = await Child.findAndCountAll({
+//       where: {
+//         name: {
+//           [Op.like]: `%${name}%`,
+//         },
+//       },
+//       limit: 6,
+//       offset: 6 * (p - 1 || 0),
+//       order: [
+//         ['createdAt', 'DESC'],
+//       ],
+//     });
+
+//     responseResult(res)({
+//       data,
+//       count,
+//     });
     // if (id) {
     //   const data = await Child.findById(id);
 
@@ -175,14 +182,14 @@ router.get('/search', async (req, res) => {
     //     count,
     //   });
     // };
-  } catch (err) {
-    if (err instanceof Sequelize.ValidationError) {
-      responseBadReq(res)(err);
-    } else {
-      responseErrors(res)(err);
-    }
-  }
-});
+//   } catch (err) {
+//     if (err instanceof Sequelize.ValidationError) {
+//       responseBadReq(res)(err);
+//     } else {
+//       responseErrors(res)(err);
+//     }
+//   }
+// });
 
 router.get('/', CommonRoute.list(Child));
 router.get('/:id', CommonRoute.get(Child));
