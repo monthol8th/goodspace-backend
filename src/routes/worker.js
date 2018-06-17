@@ -2,7 +2,7 @@ import { Router } from 'express';
 
 import CommonRoute from '../utils/commonRoute';
 
-import { respondResult, respondErrors, respondBadReq } from '../utils/response';
+import { responseResult, responseErrors, responseBadReq } from '../utils/response';
 
 const Sequelize = require('sequelize');
 const { Worker, Camp } = require('../db');
@@ -21,7 +21,7 @@ router.get('/search', async (req, res) => {
     if (id) {
       const data = await Worker.findById(req.params.id);
 
-      respondResult(res)({
+      responseResult(res)({
         data: [data],
         count: 1
       });
@@ -43,7 +43,7 @@ router.get('/search', async (req, res) => {
         offset: 6 * (p - 1 || 0),
         order: [['createdAt', 'DESC']]
       });
-      respondResult(res)({
+      responseResult(res)({
         data,
         count
       });
@@ -59,16 +59,16 @@ router.get('/search', async (req, res) => {
         order: [['createdAt', 'DESC']]
       });
 
-      respondResult(res)({
+      responseResult(res)({
         data,
         count
       });
     }
   } catch (err) {
     if (err instanceof Sequelize.ValidationError) {
-      respondBadReq(res)(err);
+      responseBadReq(res)(err);
     } else {
-      respondErrors(res)(err);
+      responseErrors(res)(err);
     }
   }
 });
@@ -82,12 +82,12 @@ router.get('/stat/nationality', async (req, res) => {
       ],
       group: ['nationality']
     });
-    respondResult(res)(result);
+    responseResult(res)(result);
   } catch (err) {
     if (err instanceof Sequelize.ValidationError) {
-      respondBadReq(res)(err);
+      responseBadReq(res)(err);
     } else {
-      respondErrors(res)(err);
+      responseErrors(res)(err);
     }
   }
 });

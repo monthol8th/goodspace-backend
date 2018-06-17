@@ -1,13 +1,13 @@
-import { respondResult, respondNotFound, respondErrors } from '../response';
+import { responseResult, responseNotFound, responseErrors } from '../response';
 
 export default model => async (req, res) => {
   try {
     const data = await model.findById(req.params.id);
     if (!data) {
-      respondNotFound(res)();
+      responseNotFound(res)();
     }
-    respondResult(res)(data);
+    responseResult(res)(data);
   } catch (err) {
-    respondErrors(res)(err);
+    responseErrors(res)(err);
   }
 };

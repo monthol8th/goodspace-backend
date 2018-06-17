@@ -2,7 +2,7 @@ import { Router } from 'express';
 
 import CommonRoute from '../utils/commonRoute';
 
-import { respondResult, respondErrors, respondBadReq } from '../utils/response';
+import { responseResult, responseErrors, responseBadReq } from '../utils/response';
 
 const Sequelize = require('sequelize');
 const { Child, Worker, Camp } = require('../db');
@@ -26,7 +26,7 @@ router.get('/search', async (req, res) => {
     if (id) {
       const data = await Child.findById(id);
 
-      respondResult(res)({
+      responseResult(res)({
         data: [data],
         count: 1
       });
@@ -52,7 +52,7 @@ router.get('/search', async (req, res) => {
         ...row.toJSON(),
         parent_name: row.Parent.name
       }));
-      respondResult(res)({
+      responseResult(res)({
         data: newData,
         count
       });
@@ -86,7 +86,7 @@ router.get('/search', async (req, res) => {
         camp_name: row.Parent.Camp.name
       }));
 
-      respondResult(res)({
+      responseResult(res)({
         data: newData,
         count
       });
@@ -102,16 +102,16 @@ router.get('/search', async (req, res) => {
         order: [['createdAt', 'DESC']]
       });
 
-      respondResult(res)({
+      responseResult(res)({
         data,
         count
       });
     }
   } catch (err) {
     if (err instanceof Sequelize.ValidationError) {
-      respondBadReq(res)(err);
+      responseBadReq(res)(err);
     } else {
-      respondErrors(res)(err);
+      responseErrors(res)(err);
     }
   }
 });

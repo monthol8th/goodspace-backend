@@ -1,4 +1,4 @@
-import { respondResult, respondBadReq, respondErrors } from '../response';
+import { responseResult, responseBadReq, responseErrors } from '../response';
 
 const Sequelize = require('sequelize');
 
@@ -10,15 +10,15 @@ export default model => async (req, res) => {
       offset: 6 * (p - 1 || 0),
       order: [['createdAt', 'DESC']]
     });
-    respondResult(res)({
+    responseResult(res)({
       data,
       count
     });
   } catch (err) {
     if (err instanceof Sequelize.ValidationError) {
-      respondBadReq(res)(err);
+      responseBadReq(res)(err);
     } else {
-      respondErrors(res)(err);
+      responseErrors(res)(err);
     }
   }
 };

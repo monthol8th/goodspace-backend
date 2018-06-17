@@ -2,7 +2,7 @@ import { Router } from 'express';
 
 import CommonRoute from '../utils/commonRoute';
 
-import { respondResult, respondErrors, respondBadReq } from '../utils/response';
+import { responseResult, responseErrors, responseBadReq } from '../utils/response';
 
 const Sequelize = require('sequelize');
 const { Camp } = require('../db');
@@ -37,15 +37,15 @@ router.get('/search', async (req, res) => {
       order: [['createdAt', 'DESC']]
     });
 
-    respondResult(res)({
+    responseResult(res)({
       data,
       count
     });
   } catch (err) {
     if (err instanceof Sequelize.ValidationError) {
-      respondBadReq(res)(err);
+      responseBadReq(res)(err);
     } else {
-      respondErrors(res)(err);
+      responseErrors(res)(err);
     }
   }
 });

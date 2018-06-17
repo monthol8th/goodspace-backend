@@ -1,4 +1,4 @@
-import { respondResult, respondBadReq, respondErrors } from '../response';
+import { responseResult, responseBadReq, responseErrors } from '../response';
 
 const Sequelize = require('sequelize');
 
@@ -8,12 +8,12 @@ export default model => async (req, res) => {
     const newProject = await model.create({
       ...data
     });
-    respondResult(res)(newProject);
+    responseResult(res)(newProject);
   } catch (err) {
     if (err instanceof Sequelize.ValidationError) {
-      respondBadReq(res)(err);
+      responseBadReq(res)(err);
     } else {
-      respondErrors(res)(err);
+      responseErrors(res)(err);
     }
   }
 };
