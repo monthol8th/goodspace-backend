@@ -2,7 +2,11 @@ import { Router } from 'express';
 
 import CommonRoute from '../utils/commonRoute';
 
-import { responseResult, responseErrors, responseBadReq } from '../utils/response';
+import {
+  responseResult,
+  responseErrors,
+  responseBadReq
+} from '../utils/response';
 
 const Sequelize = require('sequelize');
 const { Worker, Camp } = require('../db');
