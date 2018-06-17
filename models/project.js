@@ -7,6 +7,7 @@ module.exports = (sequelize, DataTypes) => {
     start_date: DataTypes.DATE,
     finish_date: DataTypes.DATE,
     manager_contact: DataTypes.JSON,
+    supplier_contact: DataTypes.JSON,
   }, {
     foreignkeyConstraint: true,
   });
