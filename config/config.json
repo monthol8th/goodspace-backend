@@ -7,8 +7,7 @@
     "password": null,
     "database": "ysttr",
     "host": "db",
-    "dialect": "postgres",
-    "logging": false
+    "dialect": "postgres"
   },
   "test": {
     "username": "postgres",
