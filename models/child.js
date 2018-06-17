@@ -6,6 +6,7 @@ module.exports = (sequelize, DataTypes) => {
     nationality: DataTypes.STRING,
     sex: DataTypes.STRING,
     school: DataTypes.JSON,
+    followed_type: DataTypes.BOOLEAN,
   }, {
     foreignkeyConstraint: true,
   });
