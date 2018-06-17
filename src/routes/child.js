@@ -1,48 +1,39 @@
-import {
-  Router,
-} from 'express';
+import { Router } from 'express';
 
 import CommonRoute from '../utils/commonRoute';
 
 import {
   responseResult,
   responseErrors,
-  responseBadReq,
+  responseBadReq
 } from '../utils/response';
 
 const Sequelize = require('sequelize');
-const {
-  Child,
-  Worker,
-  Camp,
-} = require('../db');
+const { Child, Worker, Camp } = require('../db');
 const router = Router();
 
 router.get('/', async (req, res) => {
   try {
-    const {
-      p
-    } = req.query;
-    const {
-      rows: data,
-      count
-    } = await Child.findAndCountAll({
-      include: [{
-        model: Worker,
-        as: 'Parent',
-        include: [{
-          model: Camp,
-        }]
-      }],
+    const { p } = req.query;
+    const { rows: data, count } = await Child.findAndCountAll({
+      include: [
+        {
+          model: Worker,
+          as: 'Parent',
+          include: [
+            {
+              model: Camp
+            }
+          ]
+        }
+      ],
       limit: 6,
       offset: 6 * (p - 1 || 0),
-      order: [
-        ['createdAt', 'DESC']
-      ]
+      order: [['createdAt', 'DESC']]
     });
     const newData = data.map(row => ({
       ...row.toJSON(),
-      Camp: row.Parent && row.Parent.Camp,
+      Camp: row.Parent && row.Parent.Camp
     }));
     responseResult(res)({
       data: newData,
@@ -60,13 +51,17 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
   try {
     const data = await Child.findById(req.params.id, {
-      include: [{
-        model: Worker,
-        as: 'Parent',
-        include: [{
-          model: Camp,
-        }]
-      }]
+      include: [
+        {
+          model: Worker,
+          as: 'Parent',
+          include: [
+            {
+              model: Camp
+            }
+          ]
+        }
+      ]
     });
     if (!data) {
       responseNotFound(res)();
@@ -74,7 +69,7 @@ router.get('/:id', async (req, res) => {
 
     const newData = {
       ...data.toJSON(),
-      Camp: data.Parent && data.Parent.Camp,
+      Camp: data.Parent && data.Parent.Camp
     };
 
     responseResult(res)(newData);
@@ -82,7 +77,6 @@ router.get('/:id', async (req, res) => {
     responseErrors(res)(err);
   }
 });
-
 
 // router.get('/search', async (req, res) => {
 //   try {
