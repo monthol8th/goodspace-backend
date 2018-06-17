@@ -32,7 +32,7 @@ router.get('/', async (req, res) => {
         as: 'Parent',
         include: [{
           model: Camp,
-         }]
+        }]
       }],
       limit: 6,
       offset: 6 * (p - 1 || 0),
@@ -41,9 +41,9 @@ router.get('/', async (req, res) => {
       ]
     });
     const newData = data.map(row => ({
-          ...row.toJSON(),
-          Camp: row.Parent && row.Parent.Camp,
-        })); 
+      ...row.toJSON(),
+      Camp: row.Parent && row.Parent.Camp,
+    }));
     responseResult(res)({
       data: newData,
       count
@@ -56,6 +56,33 @@ router.get('/', async (req, res) => {
     }
   }
 });
+
+router.get('/:id', async (req, res) => {
+  try {
+    const data = await Child.findById(req.params.id, {
+      include: [{
+        model: Worker,
+        as: 'Parent',
+        include: [{
+          model: Camp,
+        }]
+      }]
+    });
+    if (!data) {
+      responseNotFound(res)();
+    }
+
+    const newData = {
+      ...data.toJSON(),
+      Camp: data.Parent && data.Parent.Camp,
+    };
+
+    responseResult(res)(newData);
+  } catch (err) {
+    responseErrors(res)(err);
+  }
+});
+
 
 // router.get('/search', async (req, res) => {
 //   try {
@@ -89,99 +116,99 @@ router.get('/', async (req, res) => {
 //       data,
 //       count,
 //     });
-    // if (id) {
-    //   const data = await Child.findById(id);
+// if (id) {
+//   const data = await Child.findById(id);
 
-    //   responseResult(res)({
-    //     data: [data],
-    //     count: 1,
-    //   });
-    // } else if (parentName) {
-    //   const {
-    //     rows: data,
-    //     count,
-    //   } = await Child.findAndCountAll({
-    //     include: [{
-    //       model: Worker,
-    //       as: 'Parent',
-    //       required: true,
-    //       where: {
-    //         name: {
-    //           [Op.like]: `%${parentName}%`,
-    //         },
-    //       },
-    //     }],
-    //     limit: 6,
-    //     offset: 6 * (p - 1 || 0),
-    //     order: [
-    //       ['createdAt', 'DESC'],
-    //     ],
-    //   });
-    //   const newData = data.map(row => ({
-    //     ...row.toJSON(),
-    //     parent_name: row.Parent.name,
-    //   }));
-    //   responseResult(res)({
-    //     data: newData,
-    //     count,
-    //   });
-    // } else if (campName) {
-    //   const {
-    //     rows: data,
-    //     count,
-    //   } = await Child.findAndCountAll({
-    //     include: [{
-    //       model: Worker,
-    //       as: 'Parent',
-    //       required: true,
-    //       attributes: ['name'],
-    //       include: [{
-    //         model: Camp,
-    //         required: true,
-    //         where: {
-    //           name: {
-    //             [Op.like]: `%${campName}%`,
-    //           },
-    //         },
-    //       }],
-    //     }],
-    //     limit: 6,
-    //     offset: 6 * (p - 1 || 0),
-    //     order: [
-    //       ['createdAt', 'DESC'],
-    //     ],
-    //   });
-    //   const newData = data.map(row => ({
-    //     ...row.toJSON(),
-    //     camp_name: row.Parent.Camp.name,
-    //   }));
+//   responseResult(res)({
+//     data: [data],
+//     count: 1,
+//   });
+// } else if (parentName) {
+//   const {
+//     rows: data,
+//     count,
+//   } = await Child.findAndCountAll({
+//     include: [{
+//       model: Worker,
+//       as: 'Parent',
+//       required: true,
+//       where: {
+//         name: {
+//           [Op.like]: `%${parentName}%`,
+//         },
+//       },
+//     }],
+//     limit: 6,
+//     offset: 6 * (p - 1 || 0),
+//     order: [
+//       ['createdAt', 'DESC'],
+//     ],
+//   });
+//   const newData = data.map(row => ({
+//     ...row.toJSON(),
+//     parent_name: row.Parent.name,
+//   }));
+//   responseResult(res)({
+//     data: newData,
+//     count,
+//   });
+// } else if (campName) {
+//   const {
+//     rows: data,
+//     count,
+//   } = await Child.findAndCountAll({
+//     include: [{
+//       model: Worker,
+//       as: 'Parent',
+//       required: true,
+//       attributes: ['name'],
+//       include: [{
+//         model: Camp,
+//         required: true,
+//         where: {
+//           name: {
+//             [Op.like]: `%${campName}%`,
+//           },
+//         },
+//       }],
+//     }],
+//     limit: 6,
+//     offset: 6 * (p - 1 || 0),
+//     order: [
+//       ['createdAt', 'DESC'],
+//     ],
+//   });
+//   const newData = data.map(row => ({
+//     ...row.toJSON(),
+//     camp_name: row.Parent.Camp.name,
+//   }));
 
-    //   responseResult(res)({
-    //     data: newData,
-    //     count,
-    //   });
-    // } else {
-    //   const {
-    //     rows: data,
-    //     count,
-    //   } = await Child.findAndCountAll({
-    //     where: {
-    //       name: {
-    //         [Op.like]: `%${name}%`,
-    //       },
-    //     },
-    //     limit: 6,
-    //     offset: 6 * (p - 1 || 0),
-    //     order: [
-    //       ['createdAt', 'DESC'],
-    //     ],
-    //   });
+//   responseResult(res)({
+//     data: newData,
+//     count,
+//   });
+// } else {
+//   const {
+//     rows: data,
+//     count,
+//   } = await Child.findAndCountAll({
+//     where: {
+//       name: {
+//         [Op.like]: `%${name}%`,
+//       },
+//     },
+//     limit: 6,
+//     offset: 6 * (p - 1 || 0),
+//     order: [
+//       ['createdAt', 'DESC'],
+//     ],
+//   });
 
-    //   responseResult(res)({
-    //     data,
-    //     count,
-    //   });
-    // };
+//   responseResult(res)({
+//     data,
+//     count,
+//   });
+// };
 //   } catch (err) {
 //     if (err instanceof Sequelize.ValidationError) {
 //       responseBadReq(res)(err);
@@ -192,7 +219,6 @@ router.get('/', async (req, res) => {
 // });
 
 router.get('/', CommonRoute.list(Child));
-router.get('/:id', CommonRoute.get(Child));
 router.put('/:id', CommonRoute.put(Child));
 router.post('/', CommonRoute.post(Child));
 
