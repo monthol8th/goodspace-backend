@@ -7,7 +7,6 @@ import CommonRoute from '../utils/commonRoute';
 import {
   respondResult,
   respondErrors,
-  respondNotFound,
   respondBadReq,
 } from '../utils/response';
 
@@ -89,6 +88,22 @@ router.get('/search', async (req, res) => {
         count,
       });
     };
+  } catch (err) {
+    if (err instanceof Sequelize.ValidationError) {
+      respondBadReq(res)(err);
+    } else {
+      respondErrors(res)(err);
+    }
+  }
+});
+
+router.get('/stat/nationality', async (req, res) => {
+  try {
+    const result = await Worker.findAll({
+      attributes: ['nationality', [Sequelize.fn('COUNT', 'nationality'), 'count']],
+      group: ['nationality'],
+    });
+    respondResult(res)(result);
   } catch (err) {
     if (err instanceof Sequelize.ValidationError) {
       respondBadReq(res)(err);
